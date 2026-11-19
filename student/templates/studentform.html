@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        :root {
+            --blue: #0071e3;
+            --blue-hover: #0077ed;
+            --text: #1d1d1f;
+            --secondary: #6e6e73;
+            --border: rgba(0, 0, 0, 0.12);
+            --field: rgba(255, 255, 255, 0.72);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 40px 16px;
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                         "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 18% 18%, rgba(180, 205, 255, 0.48), transparent 28%),
+                radial-gradient(circle at 82% 78%, rgba(194, 226, 255, 0.48), transparent 30%),
+                linear-gradient(145deg, #f5f5f7 0%, #eef3f8 100%);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .registration-card {
+            width: min(680px, 100%);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.82);
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.68);
+            box-shadow:
+                0 28px 80px rgba(54, 73, 96, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+        }
+
+        .card-header {
+            padding: 38px 40px 28px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(30px, 5vw, 42px);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 1.08;
+        }
+
+        .card-header p {
+            margin: 0;
+            color: var(--secondary);
+            font-size: 17px;
+            line-height: 1.45;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            padding: 32px 40px 40px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            color: #424245;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0 15px;
+            color: var(--text);
+            background: var(--field);
+            box-shadow:
+                inset 0 1px 2px rgba(0, 0, 0, 0.025),
+                0 1px 0 rgba(255, 255, 255, 0.8);
+            font: inherit;
+            font-size: 16px;
+            outline: none;
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                background 180ms ease;
+        }
+
+        input::placeholder {
+            color: #86868b;
+        }
+
+        input:hover {
+            border-color: rgba(0, 0, 0, 0.18);
+        }
+
+        input:focus {
+            border-color: rgba(0, 113, 227, 0.62);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow:
+                0 0 0 4px rgba(0, 113, 227, 0.12),
+                inset 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
+
+        button {
+            min-width: 150px;
+            height: 50px;
+            border: 0;
+            border-radius: 980px;
+            padding: 0 24px;
+            color: #fff;
+            background: var(--blue);
+            box-shadow: 0 8px 22px rgba(0, 113, 227, 0.18);
+            font: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition:
+                background 180ms ease,
+                transform 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        button:hover {
+            background: var(--blue-hover);
+            box-shadow: 0 10px 26px rgba(0, 113, 227, 0.24);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            background: #0068cf;
+            transform: translateY(0) scale(0.985);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.16);
+        }
+
+        button:focus-visible {
+            outline: 4px solid rgba(0, 113, 227, 0.22);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px;
+            }
+
+            .registration-card {
+                border-radius: 22px;
+            }
+
+            .card-header {
+                padding: 28px 24px 22px;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+                padding: 24px;
+            }
+
+            .field,
+            .actions {
+                grid-column: 1;
+            }
+
+            .actions,
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="registration-card">
+        <header class="card-header">
+            <h1>Student Registration</h1>
+            <p>Enter the student details below to create a new record.</p>
+        </header>
+
+        <form action="{% url 'add_student' %}" method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="reg_no">Register Number</label>
+                <input id="reg_no" type="number" name="reg_no" placeholder="e.g. 101" required>
+            </div>
+
+            <div class="field">
+                <label for="name">Full Name</label>
+                <input id="name" type="text" name="name" placeholder="Enter full name" maxlength="20" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input id="email" type="email" name="email" placeholder="student@example.com" autocomplete="email" required>
+            </div>
+
+            <div class="field">
+                <label for="marks">Marks</label>
+                <input id="marks" type="number" name="marks" placeholder="0.00" min="0" max="100" step="0.01" required>
+            </div>
+
+            <div class="field full-width">
+                <label for="dob">Date of Birth</label>
+                <input id="dob" type="date" name="dob" required>
+            </div>
+
+            <div class="actions">
+                <button type="submit">Save Student</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
