@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     data1 = {
-        'name': "Abhishek",
+        'name': "Pratiksha",
         'age': 19,
         'department': "BCA"
     }
@@ -96,8 +96,8 @@ def user_login(request):
         if user is not None:
             login(request, user)
             return redirect('dashboard')
-        else:
-            return HttpResponse("Invalid credentials. Please try again.")
+
+        messages.error(request, 'Invalid username or password.')
 
     return render(request, 'login.html')
 
@@ -112,4 +112,21 @@ def user_logout(request):
         logout(request)
         return redirect('login')
 
-    return HttpResponse("Invalid request method. Please use POST to log out.")
+    return HttpResponse("Invalid request method.")
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Student_table
+from .serializers import StudentSerializer
+@api_view(['GET', 'POST'])
+def student_api(request):
+    if request.method == 'GET':
+        students = Student_table.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
